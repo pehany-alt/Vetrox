@@ -1,19 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "@/App.css";
 import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Toaster, toast } from "sonner";
+import { Helmet } from "react-helmet";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// Image URLs
+// Image URLs - Updated per user request
 const IMAGES = {
   hero: "https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  gloss: "https://images.unsplash.com/photo-1600162207874-c0294bcb3a0b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODB8MHwxfHNlYXJjaHwxfHx3aGl0ZSUyMGx1eHVyeSUyMGNhciUyMGdsb3NzeSUyMHBhaW50fGVufDB8fHx8MTc3NDI2MzU3N3ww&ixlib=rb-4.1.0&q=85",
+  gloss: "https://images.pexels.com/photos/3764984/pexels-photo-3764984.jpeg?auto=compress&cs=tinysrgb&w=800",
   satin: "https://customer-assets.emergentagent.com/job_wake-the-agent/artifacts/5cxy6kjk_new-gallery6.jpg",
-  coloured: "https://images.unsplash.com/photo-1558445941-3e4f497931b7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDV8MHwxfHNlYXJjaHwyfHxyZWQlMjBNZXJjZWRlcyUyMEJlbnolMjBsdXh1cnklMjBjYXJ8ZW58MHx8fHJlZHwxNzc0MjYzNTgyfDA&ixlib=rb-4.1.0&q=85"
+  coloured: "https://images.pexels.com/photos/3729464/pexels-photo-3729464.jpeg?auto=compress&cs=tinysrgb&w=800"
 };
+
+// SEO Component
+const SEOHead = ({ title, description, keywords }) => (
+  <Helmet>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_AU" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://vetrox.com.au" />
+  </Helmet>
+);
 
 // Navigation Component
 const Navigation = () => {
@@ -117,14 +133,14 @@ const Footer = () => (
         <div>
           <h3 className="logo-text text-xl font-bold tracking-[0.2em] text-white mb-4">VETROX</h3>
           <p className="text-white/50 text-sm">Premium Paint Protection Film</p>
-          <p className="text-white/50 text-sm">Australian Quality Guaranteed</p>
+          <p className="text-white/50 text-sm">Best PPF Quality in Australia</p>
         </div>
         <div>
           <h4 className="text-white text-sm font-medium mb-4">PRODUCTS</h4>
           <div className="space-y-2">
-            <Link to="/products" className="block text-white/50 text-sm hover:text-white transition-colours">Gloss Series</Link>
-            <Link to="/products" className="block text-white/50 text-sm hover:text-white transition-colours">Pro Satin Matte</Link>
-            <Link to="/products" className="block text-white/50 text-sm hover:text-white transition-colours">Coloured Series</Link>
+            <Link to="/products" className="block text-white/50 text-sm hover:text-white transition-colours">Gloss PPF</Link>
+            <Link to="/products" className="block text-white/50 text-sm hover:text-white transition-colours">Matte PPF</Link>
+            <Link to="/products" className="block text-white/50 text-sm hover:text-white transition-colours">Coloured Car Wrap</Link>
           </div>
         </div>
         <div>
@@ -142,13 +158,13 @@ const Footer = () => (
             <a href="https://diyppfkit.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/50 text-sm hover:text-white transition-colours">DIYPPFKIT.com.au</a>
           </div>
           <div className="mt-4 pt-4 border-t border-white/10">
-            <p className="text-emerald-400 text-sm">We accept resellers</p>
-            <Link to="/contact" className="text-white/50 text-xs hover:text-white">Become a partner →</Link>
+            <p className="text-emerald-400 text-sm">Become a PPF Reseller</p>
+            <Link to="/contact" className="text-white/50 text-xs hover:text-white">Apply now →</Link>
           </div>
         </div>
       </div>
       <div className="border-t border-white/10 mt-8 pt-8 text-center">
-        <p className="text-white/30 text-sm">© 2024 Vetrox PPF. All rights reserved.</p>
+        <p className="text-white/30 text-sm">© 2024 Vetrox PPF Australia. Premium Car Wrap & Paint Protection Film.</p>
       </div>
     </div>
   </footer>
@@ -167,24 +183,30 @@ const Home = () => {
 
   const products = [
     { title: "Gloss Series", desc: "Crystal-clear protection with showroom shine", image: IMAGES.gloss },
-    { title: "Pro Satin Matte", desc: "Sophisticated matte transformation", image: IMAGES.satin },
-    { title: "Coloured Series", desc: "200+ colours to transform your vehicle", image: IMAGES.coloured },
+    { title: "Pro Satin Matte", desc: "Sophisticated matte car transformation", image: IMAGES.satin },
+    { title: "Coloured Series", desc: "200+ colours to wrap your car", image: IMAGES.coloured },
   ];
 
   return (
     <div className="min-h-screen bg-black">
-      {/* Hero Section */}
+      <SEOHead 
+        title="Vetrox PPF Australia | Best Paint Protection Film & Car Wrap"
+        description="Premium PPF and car wrap solutions in Australia. Best quality paint protection film with 10-year warranty. Self-healing, matte car wraps, coloured PPF. Become a reseller today."
+        keywords="PPF Australia, paint protection film, car wrap, matte car, wrap car, best PPF film, PPF reseller, car wrap Australia, vehicle protection, self-healing PPF, 10 year warranty PPF"
+      />
+      
+      {/* Hero Section - Fixed padding */}
       <section className="relative h-screen flex items-center" data-testid="hero-section">
         <div className="absolute inset-0">
           <img
             src={IMAGES.hero}
-            alt="Luxury car with PPF"
+            alt="Premium PPF car wrap protection Australia"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
         </div>
         
-        <div className="relative max-w-7xl mx-auto px-6 pt-20">
+        <div className="relative max-w-7xl mx-auto px-6 pt-32">
           <p className="text-emerald-400 text-sm tracking-[0.3em] mb-6">PREMIUM PAINT PROTECTION FILM</p>
           <h1 className="text-6xl md:text-8xl font-bold text-white leading-none mb-8">
             <span className="italic">INVISIBLE</span><br />
@@ -193,7 +215,7 @@ const Home = () => {
             <span className="text-emerald-400 italic">SHINE.</span>
           </h1>
           <p className="text-white/70 text-lg max-w-xl mb-10">
-            Australian-grade protection engineered for excellence. Vetrox PPF delivers unmatched clarity, self-healing technology, and a 10-year warranty.
+            Australia's best PPF with unmatched clarity, self-healing technology, and a 10-year warranty. Premium car wrap and matte car solutions.
           </p>
           <div className="flex gap-4">
             <button 
@@ -224,7 +246,7 @@ const Home = () => {
       <section className="py-24 bg-zinc-950" data-testid="technology-section">
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">TECHNOLOGY</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-16">Engineered for Excellence</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-16">Best Quality PPF Engineering</h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, idx) => (
@@ -241,7 +263,7 @@ const Home = () => {
             <div>
               <h3 className="text-2xl text-white mb-6">Premium TPU Construction</h3>
               <p className="text-white/60 mb-8">
-                Vetrox PPF utilises Lubrizol TPU substrate with USA Ashland adhesive, delivering benchmark performance for top-tier automotive protection.
+                Vetrox PPF utilises Lubrizol TPU substrate with USA Ashland adhesive, delivering benchmark performance for top-tier automotive protection. The best PPF quality available in Australia.
               </p>
               <div className="space-y-4">
                 {[
@@ -283,7 +305,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-end mb-12">
             <div>
-              <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">PRODUCTS</p>
+              <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">CAR WRAP & PPF PRODUCTS</p>
               <h2 className="text-4xl md:text-5xl font-bold text-white">Choose Your Protection</h2>
             </div>
             <Link to="/products" className="text-white/50 hover:text-white text-sm tracking-wider transition-colours">
@@ -297,7 +319,7 @@ const Home = () => {
                 <div className="relative overflow-hidden">
                   <img
                     src={product.image}
-                    alt={product.title}
+                    alt={`${product.title} - PPF car wrap Australia`}
                     className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
@@ -316,7 +338,7 @@ const Home = () => {
       {/* Colours Preview */}
       <section className="py-24 bg-zinc-950" data-testid="colours-section">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">COLOURS</p>
+          <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">CAR WRAP COLOURS</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">200+ Premium Finishes</h2>
           <div className="flex justify-center gap-2 mb-8">
             {["#1a1a1a", "#3d3d3d", "#8b4513", "#1e3a5f", "#4a0000", "#2d4a2d", "#4a4a00", "#3d1a4a"].map((colour, idx) => (
@@ -332,9 +354,9 @@ const Home = () => {
       {/* Resellers Section */}
       <section className="py-16 bg-emerald-900/20 border-y border-emerald-500/20" data-testid="resellers-section">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h3 className="text-2xl text-white mb-4">Become a Vetrox Reseller</h3>
+          <h3 className="text-2xl text-white mb-4">Become a PPF Reseller</h3>
           <p className="text-white/60 mb-6">
-            We welcome authorised resellers across Australia. Join our network and offer premium PPF solutions to your customers.
+            We welcome authorised PPF resellers across Australia. Join our network and offer premium car wrap and paint protection film solutions to your customers.
           </p>
           <Link
             to="/contact"
@@ -349,7 +371,7 @@ const Home = () => {
       <section className="py-24 bg-black" data-testid="partners-section">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">PARTNERS</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-12">Authorised Resellers</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-12">Authorised PPF Resellers</h2>
           <div className="flex justify-center gap-12">
             <a href="https://northshoreppf.com.au/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-lg transition-colours">
               NorthShore PPF
@@ -364,9 +386,9 @@ const Home = () => {
       {/* CTA Section */}
       <section className="py-24 bg-zinc-950" data-testid="cta-section">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Ready to Protect Your Investment?</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Ready to Wrap Your Car?</h2>
           <p className="text-white/60 text-lg mb-10">
-            Get in touch with our team to discuss the best protection solution for your vehicle.
+            Get in touch with our team to discuss the best PPF and car wrap solution for your vehicle.
           </p>
           <Link
             to="/contact"
@@ -387,24 +409,24 @@ const Products = () => {
     {
       id: "gloss",
       title: "Gloss Series",
-      subtitle: "Crystal-Clear Protection",
-      desc: "Our flagship Gloss Series delivers showroom-perfect shine with invisible protection. Engineered with premium Lubrizol TPU and self-healing technology, it maintains your vehicle's original finish while protecting against stone chips, scratches, and environmental damage.",
+      subtitle: "Crystal-Clear PPF Protection",
+      desc: "Our flagship Gloss Series delivers showroom-perfect shine with invisible protection. Engineered with premium Lubrizol TPU and self-healing technology, it maintains your vehicle's original finish while protecting against stone chips, scratches, and environmental damage. The best quality PPF available in Australia.",
       features: ["Self-healing technology", "10-year warranty", "Crystal-clear transparency", "UV protection"],
       image: IMAGES.gloss
     },
     {
       id: "satin",
       title: "Pro Satin Matte",
-      subtitle: "Sophisticated Transformation",
-      desc: "Transform your vehicle with our Pro Satin Matte film. This premium finish delivers a sophisticated, factory-style satin appearance while providing the same legendary protection as our Gloss Series.",
+      subtitle: "Matte Car Transformation",
+      desc: "Transform your vehicle with our Pro Satin Matte film. This premium finish delivers a sophisticated, factory-style matte car appearance while providing the same legendary protection as our Gloss Series. Perfect for those who want to wrap their car with a unique matte finish.",
       features: ["Matte finish transformation", "Self-healing capability", "10-year warranty", "Satin texture retention"],
       image: IMAGES.satin
     },
     {
       id: "coloured",
       title: "Coloured Series",
-      subtitle: "Express Your Style",
-      desc: "With over 200 premium colours available, our Coloured Series lets you completely transform your vehicle while maintaining full PPF protection. From classic metallics to bold custom shades.",
+      subtitle: "Car Wrap in 200+ Colours",
+      desc: "With over 200 premium colours available, our Coloured Series lets you completely wrap your car while maintaining full PPF protection. From classic metallics to bold custom shades - the ultimate car wrap solution in Australia.",
       features: ["200+ colour options", "Full PPF protection", "Colour-stable formula", "10-year warranty"],
       image: IMAGES.coloured
     }
@@ -412,11 +434,17 @@ const Products = () => {
 
   return (
     <div className="min-h-screen bg-black pt-24" data-testid="products-page">
+      <SEOHead 
+        title="PPF Products Australia | Car Wrap, Matte Car, Paint Protection Film"
+        description="Premium PPF products including gloss, matte car wraps, and coloured car wrap films. Best quality paint protection film with 10-year warranty in Australia."
+        keywords="PPF products, car wrap, matte car, wrap car, paint protection film Australia, gloss PPF, matte PPF, coloured car wrap"
+      />
+      
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">OUR PRODUCTS</p>
+        <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">CAR WRAP & PPF PRODUCTS</p>
         <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">Protection Solutions</h1>
         <p className="text-white/60 text-lg max-w-2xl mb-16">
-          Every Vetrox product is engineered with premium materials and backed by our comprehensive 10-year warranty.
+          Every Vetrox product is engineered with premium materials and backed by our comprehensive 10-year warranty. The best PPF quality in Australia.
         </p>
 
         <div className="space-y-24">
@@ -425,7 +453,7 @@ const Products = () => {
               <div className={idx % 2 === 1 ? 'md:order-2' : ''}>
                 <img
                   src={product.image}
-                  alt={product.title}
+                  alt={`${product.title} - PPF car wrap Australia`}
                   className="w-full h-96 object-cover"
                 />
               </div>
@@ -614,7 +642,6 @@ const Colours = () => {
     },
   ];
 
-  // Generate colour swatches with approximate colours
   const getColourSwatch = (name) => {
     const colourMap = {
       'white': '#f5f5f5', 'pearl': '#faf8f5', 'crystal': '#f0f8ff',
@@ -642,11 +669,17 @@ const Colours = () => {
 
   return (
     <div className="min-h-screen bg-black pt-24" data-testid="colours-page">
+      <SEOHead 
+        title="Car Wrap Colours Australia | 200+ PPF Colour Options"
+        description="Over 200 premium car wrap colours available. From matte car finishes to glossy PPF wraps. Find the perfect colour to wrap your car in Australia."
+        keywords="car wrap colours, PPF colours, wrap car colours, matte car colours, car wrap Australia, coloured PPF, vehicle wrap"
+      />
+      
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">COLOUR GALLERY</p>
+        <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">CAR WRAP COLOUR GALLERY</p>
         <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">200+ Premium Finishes</h1>
         <p className="text-white/60 text-lg max-w-2xl mb-16">
-          From classic metallics to bold custom shades, find the perfect colour to transform your vehicle. All colours available in our TOP-TPU range.
+          From classic metallics to bold custom shades, find the perfect colour to wrap your car. All colours available in our TOP-TPU range with best quality guarantee.
         </p>
 
         <div className="space-y-16">
@@ -674,7 +707,7 @@ const Colours = () => {
 
         <div className="mt-20 text-center p-12 border border-white/10 bg-zinc-900">
           <h3 className="text-2xl text-white mb-4">Can't Find Your Perfect Colour?</h3>
-          <p className="text-white/60 mb-6">We offer custom colour matching services. Contact us with your requirements.</p>
+          <p className="text-white/60 mb-6">We offer custom colour matching services for your car wrap project.</p>
           <Link
             to="/contact"
             className="inline-block px-8 py-3 bg-emerald-500 text-white text-sm tracking-wider hover:bg-emerald-600 transition-all font-medium"
@@ -691,6 +724,12 @@ const Colours = () => {
 const About = () => {
   return (
     <div className="min-h-screen bg-black pt-24" data-testid="about-page">
+      <SEOHead 
+        title="About Vetrox PPF Australia | Best Quality Paint Protection Film"
+        description="Vetrox provides Australia's best PPF with 10-year warranty. Premium car wrap and paint protection film solutions. Become a PPF reseller today."
+        keywords="about Vetrox, PPF Australia, best PPF quality, car wrap Australia, PPF reseller, paint protection film"
+      />
+      
       <div className="max-w-7xl mx-auto px-6 py-12">
         <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">ABOUT VETROX</p>
         <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">Australian Excellence</h1>
@@ -699,10 +738,10 @@ const About = () => {
           <div>
             <h2 className="text-2xl text-white mb-6">Our Story</h2>
             <p className="text-white/60 leading-relaxed mb-6">
-              Vetrox was founded with a simple mission: to provide Australian vehicle owners with the highest quality paint protection film available. We believe that protecting your investment shouldn't mean compromising on quality or appearance.
+              Vetrox was founded with a simple mission: to provide Australian vehicle owners with the best quality paint protection film and car wrap solutions available. We believe that protecting your investment shouldn't mean compromising on quality or appearance.
             </p>
             <p className="text-white/60 leading-relaxed mb-6">
-              Our films are engineered using the finest materials, including Lubrizol TPU substrate and USA Ashland adhesive, ensuring benchmark performance that exceeds industry standards.
+              Our PPF films are engineered using the finest materials, including Lubrizol TPU substrate and USA Ashland adhesive, ensuring benchmark performance that exceeds industry standards for car wrap and matte car applications.
             </p>
             <p className="text-white/60 leading-relaxed">
               Every Vetrox product is backed by our comprehensive 10-year warranty, giving you peace of mind that your investment is protected.
@@ -711,7 +750,7 @@ const About = () => {
           <div>
             <img
               src={IMAGES.hero}
-              alt="Premium vehicle protection"
+              alt="Premium PPF car wrap protection Australia"
               className="w-full h-80 object-cover"
             />
           </div>
@@ -720,7 +759,7 @@ const About = () => {
         <div className="grid md:grid-cols-3 gap-8 mt-20">
           {[
             { number: "10", label: "Year Warranty", suffix: "+" },
-            { number: "200", label: "Colour Options", suffix: "+" },
+            { number: "200", label: "Wrap Colours", suffix: "+" },
             { number: "100", label: "Satisfied Customers", suffix: "%" }
           ].map((stat, idx) => (
             <div key={idx} className="text-center p-8 border border-white/10">
@@ -734,9 +773,9 @@ const About = () => {
 
         {/* Reseller CTA */}
         <div className="mt-20 p-12 bg-emerald-900/20 border border-emerald-500/20 text-center">
-          <h2 className="text-3xl text-white mb-4">We Accept Resellers</h2>
+          <h2 className="text-3xl text-white mb-4">Become a PPF Reseller</h2>
           <p className="text-white/60 mb-6 max-w-2xl mx-auto">
-            Join our growing network of authorised resellers across Australia. We provide full product training, marketing support, and competitive wholesale pricing.
+            Join our growing network of authorised PPF resellers across Australia. We provide full product training, marketing support, and competitive wholesale pricing for car wrap and paint protection film products.
           </p>
           <Link
             to="/contact"
@@ -747,15 +786,15 @@ const About = () => {
         </div>
 
         <div className="mt-20">
-          <h2 className="text-2xl text-white mb-8">Why Choose Vetrox?</h2>
+          <h2 className="text-2xl text-white mb-8">Why Choose Vetrox PPF?</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {[
-              { title: "Premium Materials", desc: "Lubrizol TPU substrate with USA Ashland adhesive" },
+              { title: "Best Quality PPF", desc: "Lubrizol TPU substrate with USA Ashland adhesive" },
               { title: "Self-Healing Technology", desc: "Minor scratches disappear with heat application" },
               { title: "Crystal Clear Finish", desc: "Virtually invisible protection that enhances your paint" },
               { title: "UV Protection", desc: "Prevents yellowing and maintains clarity for years" },
               { title: "Hydrophobic Coating", desc: "Water beads off, keeping your car cleaner longer" },
-              { title: "Professional Network", desc: "Authorised installers across Australia" }
+              { title: "Professional Network", desc: "Authorised PPF installers across Australia" }
             ].map((item, idx) => (
               <div key={idx} className="flex gap-4 p-6 border border-white/10">
                 <span className="text-emerald-400 text-xl">✓</span>
@@ -772,17 +811,15 @@ const About = () => {
   );
 };
 
-// Contact Page with Enquiry Form
+// Contact Page with Updated Enquiry Form
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    vehicle_make: "",
-    vehicle_model: "",
-    service_type: "",
-    message: "",
-    enquiry_type: "quote"
+    company: "",
+    enquiry_type: "",
+    message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -805,11 +842,9 @@ const Contact = () => {
         name: "",
         email: "",
         phone: "",
-        vehicle_make: "",
-        vehicle_model: "",
-        service_type: "",
-        message: "",
-        enquiry_type: "quote"
+        company: "",
+        enquiry_type: "",
+        message: ""
       });
     } catch (error) {
       console.error("Error submitting enquiry:", error);
@@ -819,19 +854,23 @@ const Contact = () => {
     }
   };
 
-  const serviceTypes = [
-    "Full Vehicle PPF",
-    "Partial PPF (Front End)",
-    "Gloss Series",
-    "Pro Satin Matte",
-    "Coloured PPF",
-    "Custom Colour Match",
-    "Reseller Enquiry",
-    "Other / Not Sure"
+  const enquiryTypes = [
+    "General Enquiry",
+    "Product Information",
+    "Request a Quote",
+    "Find an Installer",
+    "Become a Reseller",
+    "Warranty Claim"
   ];
 
   return (
     <div className="min-h-screen bg-black pt-24" data-testid="contact-page">
+      <SEOHead 
+        title="Contact Vetrox PPF Australia | Get a Quote, Become a Reseller"
+        description="Contact us for PPF quotes, product information, find an installer, or become a PPF reseller in Australia. Best car wrap and paint protection film solutions."
+        keywords="contact Vetrox, PPF quote, become PPF reseller, find PPF installer, car wrap quote Australia"
+      />
+      
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid md:grid-cols-2 gap-16">
           {/* Contact Info */}
@@ -839,14 +878,14 @@ const Contact = () => {
             <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">CONTACT US</p>
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">Get in Touch</h1>
             <p className="text-white/60 text-lg mb-12">
-              Ready to protect your investment? Fill out the form and our team will get back to you within 24 hours.
+              Ready to protect your vehicle with the best PPF? Fill out the form and our team will get back to you within 24 hours.
             </p>
 
             <div className="space-y-8">
               <div>
                 <h3 className="text-white font-medium mb-2">Email</h3>
-                <a href="mailto:admin@vetrox.com.au" className="text-emerald-400 hover:text-emerald-300 transition-colours">
-                  admin@vetrox.com.au
+                <a href="mailto:admin@vetrox.com" className="text-emerald-400 hover:text-emerald-300 transition-colours">
+                  admin@vetrox.com
                 </a>
               </div>
               <div>
@@ -867,15 +906,15 @@ const Contact = () => {
               
               {/* Reseller Notice */}
               <div className="p-6 bg-emerald-900/20 border border-emerald-500/30">
-                <h3 className="text-emerald-400 font-medium mb-2">Become a Reseller</h3>
+                <h3 className="text-emerald-400 font-medium mb-2">Become a PPF Reseller</h3>
                 <p className="text-white/60 text-sm">
-                  We accept resellers across Australia. Select "Reseller Enquiry" in the form to learn about partnership opportunities.
+                  We welcome PPF resellers across Australia. Select "Become a Reseller" in the enquiry type to learn about partnership opportunities.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Enquiry Form */}
+          {/* Enquiry Form - Updated */}
           <div className="bg-zinc-900 p-8 md:p-12">
             {submitted ? (
               <div className="text-center py-12" data-testid="form-success">
@@ -893,42 +932,13 @@ const Contact = () => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} data-testid="enquiry-form">
-                <h2 className="text-2xl text-white mb-2">Request a Quote</h2>
+                <h2 className="text-2xl text-white mb-2">Send an Enquiry</h2>
                 <div className="warranty-badge mb-8">
                   <span className="text-emerald-400">●</span>
                   10 Year Warranty
                 </div>
                 
                 <div className="space-y-6">
-                  {/* Enquiry Type */}
-                  <div>
-                    <label className="block text-white/70 text-sm mb-2">Enquiry Type</label>
-                    <div className="flex gap-4">
-                      <label className="flex items-center gap-2 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="enquiry_type"
-                          value="quote"
-                          checked={formData.enquiry_type === "quote"}
-                          onChange={handleChange}
-                          className="text-emerald-400"
-                        />
-                        <span className="text-white/70 text-sm">Get a Quote</span>
-                      </label>
-                      <label className="flex items-center gap-2 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="enquiry_type"
-                          value="reseller"
-                          checked={formData.enquiry_type === "reseller"}
-                          onChange={handleChange}
-                          className="text-emerald-400"
-                        />
-                        <span className="text-white/70 text-sm">Reseller Enquiry</span>
-                      </label>
-                    </div>
-                  </div>
-
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-white/70 text-sm mb-2">Name *</label>
@@ -972,47 +982,34 @@ const Contact = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-white/70 text-sm mb-2">Service Type</label>
-                      <select
-                        name="service_type"
-                        value={formData.service_type}
+                      <label className="block text-white/70 text-sm mb-2">Company</label>
+                      <input
+                        type="text"
+                        name="company"
+                        value={formData.company}
                         onChange={handleChange}
-                        data-testid="input-service-type"
+                        data-testid="input-company"
                         className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colours"
-                      >
-                        <option value="">Select a service</option>
-                        {serviceTypes.map((type) => (
-                          <option key={type} value={type}>{type}</option>
-                        ))}
-                      </select>
+                        placeholder="Your company name"
+                      />
                     </div>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-white/70 text-sm mb-2">Vehicle Make</label>
-                      <input
-                        type="text"
-                        name="vehicle_make"
-                        value={formData.vehicle_make}
-                        onChange={handleChange}
-                        data-testid="input-vehicle-make"
-                        className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colours"
-                        placeholder="e.g., BMW, Mercedes, Tesla"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-white/70 text-sm mb-2">Vehicle Model</label>
-                      <input
-                        type="text"
-                        name="vehicle_model"
-                        value={formData.vehicle_model}
-                        onChange={handleChange}
-                        data-testid="input-vehicle-model"
-                        className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colours"
-                        placeholder="e.g., M3, C63, Model S"
-                      />
-                    </div>
+                  <div>
+                    <label className="block text-white/70 text-sm mb-2">Enquiry Type *</label>
+                    <select
+                      name="enquiry_type"
+                      value={formData.enquiry_type}
+                      onChange={handleChange}
+                      required
+                      data-testid="input-enquiry-type"
+                      className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colours"
+                    >
+                      <option value="">Select enquiry type</option>
+                      {enquiryTypes.map((type) => (
+                        <option key={type} value={type}>{type}</option>
+                      ))}
+                    </select>
                   </div>
 
                   <div>
@@ -1025,7 +1022,7 @@ const Contact = () => {
                       rows={5}
                       data-testid="input-message"
                       className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colours resize-none"
-                      placeholder="Tell us about your project..."
+                      placeholder="Tell us about your enquiry..."
                     />
                   </div>
 

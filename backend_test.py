@@ -104,9 +104,8 @@ class VetroxAPITester:
             "name": "Test Customer",
             "email": "test@example.com",
             "phone": "+61 400 000 000",
-            "vehicle_make": "BMW",
-            "vehicle_model": "M3",
-            "service_type": "Full Vehicle PPF",
+            "company": "Test Company",
+            "enquiry_type": "General Enquiry",
             "message": "I would like a quote for full vehicle PPF protection for my BMW M3. Please contact me with pricing and availability."
         }
         
@@ -126,9 +125,9 @@ class VetroxAPITester:
             # Verify email_sent status
             if 'email_sent' in response:
                 if response['email_sent']:
-                    print("   ✅ Email sent successfully")
+                    print("   ✅ Gmail SMTP email sent successfully")
                 else:
-                    print("   ⚠️  Email not sent (check Resend API configuration)")
+                    print("   ⚠️  Email not sent (check Gmail SMTP configuration)")
         
         # Test enquiry submission with minimal data
         minimal_enquiry = {
@@ -179,7 +178,8 @@ class VetroxAPITester:
             "name": "Potential Reseller",
             "email": "reseller@example.com",
             "phone": "+61 400 111 222",
-            "service_type": "Reseller Enquiry",
+            "company": "Test Reseller Company",
+            "enquiry_type": "Become a Reseller",
             "message": "I am interested in becoming a Vetrox reseller. Please provide information about partnership opportunities and wholesale pricing."
         }
         
