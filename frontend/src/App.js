@@ -890,7 +890,7 @@ const Contact = () => {
               </div>
               <div>
                 <h3 className="text-white font-medium mb-2">Location</h3>
-                <p className="text-white/60">Australia</p>
+                <p className="text-white/60">PO Box 426 St Ives NSW 2075</p>
               </div>
               <div>
                 <h3 className="text-white font-medium mb-4">Authorised Partners</h3>
