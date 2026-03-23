@@ -154,7 +154,7 @@ const Footer = () => (
         <div>
           <h4 className="text-white text-sm font-medium mb-4">PARTNERS</h4>
           <div className="space-y-2">
-            <a href="https://northshoreppf.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/50 text-sm hover:text-white transition-colours">NorthShore PPF</a>
+            <a href="https://ppfdetailing.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/50 text-sm hover:text-white transition-colours">NorthShore PPF</a>
             <a href="https://diyppfkit.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/50 text-sm hover:text-white transition-colours">DIYPPFKIT.com.au</a>
           </div>
           <div className="mt-4 pt-4 border-t border-white/10">
@@ -373,7 +373,7 @@ const Home = () => {
           <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">PARTNERS</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-12">Authorised PPF Resellers</h2>
           <div className="flex justify-center gap-12">
-            <a href="https://northshoreppf.com.au/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-lg transition-colours">
+            <a href="https://ppfdetailing.com.au/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-lg transition-colours">
               NorthShore PPF
             </a>
             <a href="https://diyppfkit.com.au/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-lg transition-colours">
@@ -895,7 +895,7 @@ const Contact = () => {
               <div>
                 <h3 className="text-white font-medium mb-4">Authorised Partners</h3>
                 <div className="space-y-2">
-                  <a href="https://northshoreppf.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/60 hover:text-white transition-colours">
+                  <a href="https://ppfdetailing.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/60 hover:text-white transition-colours">
                     NorthShore PPF →
                   </a>
                   <a href="https://diyppfkit.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/60 hover:text-white transition-colours">
