@@ -13,7 +13,8 @@ const IMAGES = {
   hero: "https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&cs=tinysrgb&w=1920",
   gloss: "https://images.pexels.com/photos/3764984/pexels-photo-3764984.jpeg?auto=compress&cs=tinysrgb&w=800",
   satin: "https://customer-assets.emergentagent.com/job_wake-the-agent/artifacts/5cxy6kjk_new-gallery6.jpg",
-  coloured: "https://images.pexels.com/photos/3729464/pexels-photo-3729464.jpeg?auto=compress&cs=tinysrgb&w=800"
+  coloured: "https://images.pexels.com/photos/3729464/pexels-photo-3729464.jpeg?auto=compress&cs=tinysrgb&w=800",
+  logo: "https://customer-assets.emergentagent.com/job_wake-the-agent/artifacts/7ceg7al2_PHOTO-2026-01-27-20-13-08.jpg"
 };
 
 // SEO Component
@@ -47,8 +48,8 @@ const Navigation = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="logo-text text-2xl font-bold tracking-[0.3em] text-white" data-testid="logo">
-          VETROX
+        <Link to="/" className="flex items-center" data-testid="logo">
+          <img src={IMAGES.logo} alt="Vetrox" className="h-8 md:h-10" />
         </Link>
         
         {/* Desktop Navigation */}
@@ -131,7 +132,7 @@ const Footer = () => (
     <div className="max-w-7xl mx-auto px-6">
       <div className="grid md:grid-cols-4 gap-8">
         <div>
-          <h3 className="logo-text text-xl font-bold tracking-[0.2em] text-white mb-4">VETROX</h3>
+          <img src={IMAGES.logo} alt="Vetrox" className="h-8 mb-4" />
           <p className="text-white/50 text-sm">Premium Paint Protection Film</p>
           <p className="text-white/50 text-sm">Best PPF Quality in Australia</p>
         </div>
