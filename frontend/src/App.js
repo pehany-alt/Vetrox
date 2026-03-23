@@ -7,6 +7,14 @@ import { Toaster, toast } from "sonner";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+// Image URLs
+const IMAGES = {
+  hero: "https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  gloss: "https://images.unsplash.com/photo-1600162207874-c0294bcb3a0b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODB8MHwxfHNlYXJjaHwxfHx3aGl0ZSUyMGx1eHVyeSUyMGNhciUyMGdsb3NzeSUyMHBhaW50fGVufDB8fHx8MTc3NDI2MzU3N3ww&ixlib=rb-4.1.0&q=85",
+  satin: "https://customer-assets.emergentagent.com/job_wake-the-agent/artifacts/5cxy6kjk_new-gallery6.jpg",
+  coloured: "https://images.unsplash.com/photo-1558445941-3e4f497931b7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDV8MHwxfHNlYXJjaHwyfHxyZWQlMjBNZXJjZWRlcyUyMEJlbnolMjBsdXh1cnklMjBjYXJ8ZW58MHx8fHJlZHwxNzc0MjYzNTgyfDA&ixlib=rb-4.1.0&q=85"
+};
+
 // Navigation Component
 const Navigation = () => {
   const location = useLocation();
@@ -15,7 +23,7 @@ const Navigation = () => {
   const navLinks = [
     { path: "/", label: "HOME" },
     { path: "/products", label: "PRODUCTS" },
-    { path: "/colors", label: "COLORS" },
+    { path: "/colours", label: "COLOURS" },
     { path: "/about", label: "ABOUT" },
     { path: "/contact", label: "CONTACT" },
   ];
@@ -23,7 +31,7 @@ const Navigation = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-light tracking-[0.3em] text-white" data-testid="logo">
+        <Link to="/" className="logo-text text-2xl font-bold tracking-[0.3em] text-white" data-testid="logo">
           VETROX
         </Link>
         
@@ -34,7 +42,7 @@ const Navigation = () => {
               key={link.path}
               to={link.path}
               data-testid={`nav-${link.label.toLowerCase()}`}
-              className={`text-sm tracking-wider transition-colors ${
+              className={`nav-link text-sm tracking-wider transition-colors ${
                 location.pathname === link.path
                   ? "text-emerald-400"
                   : "text-white/70 hover:text-white"
@@ -48,7 +56,7 @@ const Navigation = () => {
         <Link
           to="/contact"
           data-testid="nav-enquire-btn"
-          className="hidden md:block px-6 py-2 border border-white text-white text-sm tracking-wider hover:bg-white hover:text-black transition-all"
+          className="hidden md:block px-6 py-2 border border-white text-white text-sm tracking-wider hover:bg-white hover:text-black transition-all font-medium"
         >
           ENQUIRE NOW
         </Link>
@@ -107,31 +115,35 @@ const Footer = () => (
     <div className="max-w-7xl mx-auto px-6">
       <div className="grid md:grid-cols-4 gap-8">
         <div>
-          <h3 className="text-xl font-light tracking-[0.2em] text-white mb-4">VETROX</h3>
+          <h3 className="logo-text text-xl font-bold tracking-[0.2em] text-white mb-4">VETROX</h3>
           <p className="text-white/50 text-sm">Premium Paint Protection Film</p>
           <p className="text-white/50 text-sm">Australian Quality Guaranteed</p>
         </div>
         <div>
           <h4 className="text-white text-sm font-medium mb-4">PRODUCTS</h4>
           <div className="space-y-2">
-            <Link to="/products" className="block text-white/50 text-sm hover:text-white transition-colors">Gloss Series</Link>
-            <Link to="/products" className="block text-white/50 text-sm hover:text-white transition-colors">Pro Satin Matte</Link>
-            <Link to="/products" className="block text-white/50 text-sm hover:text-white transition-colors">Colored Series</Link>
+            <Link to="/products" className="block text-white/50 text-sm hover:text-white transition-colours">Gloss Series</Link>
+            <Link to="/products" className="block text-white/50 text-sm hover:text-white transition-colours">Pro Satin Matte</Link>
+            <Link to="/products" className="block text-white/50 text-sm hover:text-white transition-colours">Coloured Series</Link>
           </div>
         </div>
         <div>
           <h4 className="text-white text-sm font-medium mb-4">COMPANY</h4>
           <div className="space-y-2">
-            <Link to="/about" className="block text-white/50 text-sm hover:text-white transition-colors">About Us</Link>
-            <Link to="/contact" className="block text-white/50 text-sm hover:text-white transition-colors">Contact</Link>
-            <Link to="/colors" className="block text-white/50 text-sm hover:text-white transition-colors">Color Gallery</Link>
+            <Link to="/about" className="block text-white/50 text-sm hover:text-white transition-colours">About Us</Link>
+            <Link to="/contact" className="block text-white/50 text-sm hover:text-white transition-colours">Contact</Link>
+            <Link to="/colours" className="block text-white/50 text-sm hover:text-white transition-colours">Colour Gallery</Link>
           </div>
         </div>
         <div>
           <h4 className="text-white text-sm font-medium mb-4">PARTNERS</h4>
           <div className="space-y-2">
-            <a href="https://northshoreppf.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/50 text-sm hover:text-white transition-colors">NorthShore PPF</a>
-            <a href="https://diyppfkit.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/50 text-sm hover:text-white transition-colors">DIYPPFKIT.com.au</a>
+            <a href="https://northshoreppf.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/50 text-sm hover:text-white transition-colours">NorthShore PPF</a>
+            <a href="https://diyppfkit.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/50 text-sm hover:text-white transition-colours">DIYPPFKIT.com.au</a>
+          </div>
+          <div className="mt-4 pt-4 border-t border-white/10">
+            <p className="text-emerald-400 text-sm">We accept resellers</p>
+            <Link to="/contact" className="text-white/50 text-xs hover:text-white">Become a partner →</Link>
           </div>
         </div>
       </div>
@@ -154,9 +166,9 @@ const Home = () => {
   ];
 
   const products = [
-    { title: "Gloss Series", desc: "Crystal-clear protection with showroom shine", image: "https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&cs=tinysrgb&w=800" },
-    { title: "Pro Satin Matte", desc: "Sophisticated matte transformation", image: "https://images.pexels.com/photos/3729464/pexels-photo-3729464.jpeg?auto=compress&cs=tinysrgb&w=800" },
-    { title: "Colored Series", desc: "200+ colors to transform your vehicle", image: "https://images.pexels.com/photos/3764984/pexels-photo-3764984.jpeg?auto=compress&cs=tinysrgb&w=800" },
+    { title: "Gloss Series", desc: "Crystal-clear protection with showroom shine", image: IMAGES.gloss },
+    { title: "Pro Satin Matte", desc: "Sophisticated matte transformation", image: IMAGES.satin },
+    { title: "Coloured Series", desc: "200+ colours to transform your vehicle", image: IMAGES.coloured },
   ];
 
   return (
@@ -165,7 +177,7 @@ const Home = () => {
       <section className="relative h-screen flex items-center" data-testid="hero-section">
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&cs=tinysrgb&w=1920"
+            src={IMAGES.hero}
             alt="Luxury car with PPF"
             className="w-full h-full object-cover"
           />
@@ -174,9 +186,9 @@ const Home = () => {
         
         <div className="relative max-w-7xl mx-auto px-6 pt-20">
           <p className="text-emerald-400 text-sm tracking-[0.3em] mb-6">PREMIUM PAINT PROTECTION FILM</p>
-          <h1 className="text-6xl md:text-8xl font-light text-white leading-none mb-8">
+          <h1 className="text-6xl md:text-8xl font-bold text-white leading-none mb-8">
             <span className="italic">INVISIBLE</span><br />
-            <span className="italic">ARMOR.</span><br />
+            <span className="italic">ARMOUR.</span><br />
             <span className="text-emerald-400 italic">TIMELESS</span><br />
             <span className="text-emerald-400 italic">SHINE.</span>
           </h1>
@@ -187,21 +199,23 @@ const Home = () => {
             <button 
               onClick={() => navigate('/products')}
               data-testid="hero-explore-btn"
-              className="px-8 py-3 bg-white text-black text-sm tracking-wider hover:bg-white/90 transition-all"
+              className="px-8 py-3 bg-white text-black text-sm tracking-wider hover:bg-white/90 transition-all font-medium"
             >
               EXPLORE PRODUCTS
             </button>
             <button 
               onClick={() => navigate('/contact')}
               data-testid="hero-quote-btn"
-              className="px-8 py-3 border border-white text-white text-sm tracking-wider hover:bg-white hover:text-black transition-all"
+              className="px-8 py-3 border border-white text-white text-sm tracking-wider hover:bg-white hover:text-black transition-all font-medium"
             >
               GET A QUOTE
             </button>
           </div>
-          <div className="mt-12 flex items-center gap-2">
-            <span className="text-emerald-400 text-2xl">●</span>
-            <span className="text-white/70 text-sm tracking-wider">10 Year Warranty</span>
+          <div className="mt-12">
+            <span className="warranty-badge">
+              <span className="text-emerald-400">●</span>
+              10 Year Warranty
+            </span>
           </div>
         </div>
       </section>
@@ -210,7 +224,7 @@ const Home = () => {
       <section className="py-24 bg-zinc-950" data-testid="technology-section">
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">TECHNOLOGY</p>
-          <h2 className="text-4xl md:text-5xl font-light text-white mb-16">Engineered for Excellence</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-16">Engineered for Excellence</h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, idx) => (
@@ -227,7 +241,7 @@ const Home = () => {
             <div>
               <h3 className="text-2xl text-white mb-6">Premium TPU Construction</h3>
               <p className="text-white/60 mb-8">
-                Vetrox PPF utilizes Lubrizol TPU substrate with USA Ashland adhesive, delivering benchmark performance for top-tier automotive protection.
+                Vetrox PPF utilises Lubrizol TPU substrate with USA Ashland adhesive, delivering benchmark performance for top-tier automotive protection.
               </p>
               <div className="space-y-4">
                 {[
@@ -270,9 +284,9 @@ const Home = () => {
           <div className="flex justify-between items-end mb-12">
             <div>
               <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">PRODUCTS</p>
-              <h2 className="text-4xl md:text-5xl font-light text-white">Choose Your Protection</h2>
+              <h2 className="text-4xl md:text-5xl font-bold text-white">Choose Your Protection</h2>
             </div>
-            <Link to="/products" className="text-white/50 hover:text-white text-sm tracking-wider transition-colors">
+            <Link to="/products" className="text-white/50 hover:text-white text-sm tracking-wider transition-colours">
               View All Products →
             </Link>
           </div>
@@ -299,18 +313,34 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Colors Preview */}
-      <section className="py-24 bg-zinc-950" data-testid="colors-section">
+      {/* Colours Preview */}
+      <section className="py-24 bg-zinc-950" data-testid="colours-section">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">COLORS</p>
-          <h2 className="text-4xl md:text-5xl font-light text-white mb-8">200+ Premium Finishes</h2>
+          <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">COLOURS</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">200+ Premium Finishes</h2>
           <div className="flex justify-center gap-2 mb-8">
-            {["#1a1a1a", "#3d3d3d", "#8b4513", "#1e3a5f", "#4a0000", "#2d4a2d", "#4a4a00", "#3d1a4a"].map((color, idx) => (
-              <div key={idx} className="w-12 h-12 rounded-full border-2 border-white/20" style={{ backgroundColor: color }} />
+            {["#1a1a1a", "#3d3d3d", "#8b4513", "#1e3a5f", "#4a0000", "#2d4a2d", "#4a4a00", "#3d1a4a"].map((colour, idx) => (
+              <div key={idx} className="w-12 h-12 rounded-full border-2 border-white/20" style={{ backgroundColor: colour }} />
             ))}
           </div>
-          <Link to="/colors" className="inline-block px-8 py-3 border border-white text-white text-sm tracking-wider hover:bg-white hover:text-black transition-all">
-            View Color Gallery
+          <Link to="/colours" className="inline-block px-8 py-3 border border-white text-white text-sm tracking-wider hover:bg-white hover:text-black transition-all font-medium">
+            View Colour Gallery
+          </Link>
+        </div>
+      </section>
+
+      {/* Resellers Section */}
+      <section className="py-16 bg-emerald-900/20 border-y border-emerald-500/20" data-testid="resellers-section">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h3 className="text-2xl text-white mb-4">Become a Vetrox Reseller</h3>
+          <p className="text-white/60 mb-6">
+            We welcome authorised resellers across Australia. Join our network and offer premium PPF solutions to your customers.
+          </p>
+          <Link
+            to="/contact"
+            className="inline-block px-8 py-3 bg-emerald-500 text-white text-sm tracking-wider hover:bg-emerald-600 transition-all font-medium"
+          >
+            Apply to Become a Reseller
           </Link>
         </div>
       </section>
@@ -319,12 +349,12 @@ const Home = () => {
       <section className="py-24 bg-black" data-testid="partners-section">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">PARTNERS</p>
-          <h2 className="text-4xl md:text-5xl font-light text-white mb-12">Authorised Resellers</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-12">Authorised Resellers</h2>
           <div className="flex justify-center gap-12">
-            <a href="https://northshoreppf.com.au/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-lg transition-colors">
+            <a href="https://northshoreppf.com.au/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-lg transition-colours">
               NorthShore PPF
             </a>
-            <a href="https://diyppfkit.com.au/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-lg transition-colors">
+            <a href="https://diyppfkit.com.au/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-lg transition-colours">
               DIYPPFKIT.com.au
             </a>
           </div>
@@ -334,14 +364,14 @@ const Home = () => {
       {/* CTA Section */}
       <section className="py-24 bg-zinc-950" data-testid="cta-section">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-light text-white mb-6">Ready to Protect Your Investment?</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Ready to Protect Your Investment?</h2>
           <p className="text-white/60 text-lg mb-10">
             Get in touch with our team to discuss the best protection solution for your vehicle.
           </p>
           <Link
             to="/contact"
             data-testid="cta-contact-btn"
-            className="inline-block px-10 py-4 bg-emerald-500 text-white text-sm tracking-wider hover:bg-emerald-600 transition-all"
+            className="inline-block px-10 py-4 bg-emerald-500 text-white text-sm tracking-wider hover:bg-emerald-600 transition-all font-medium"
           >
             Contact Us Today
           </Link>
@@ -360,7 +390,7 @@ const Products = () => {
       subtitle: "Crystal-Clear Protection",
       desc: "Our flagship Gloss Series delivers showroom-perfect shine with invisible protection. Engineered with premium Lubrizol TPU and self-healing technology, it maintains your vehicle's original finish while protecting against stone chips, scratches, and environmental damage.",
       features: ["Self-healing technology", "10-year warranty", "Crystal-clear transparency", "UV protection"],
-      image: "https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&cs=tinysrgb&w=800"
+      image: IMAGES.gloss
     },
     {
       id: "satin",
@@ -368,15 +398,15 @@ const Products = () => {
       subtitle: "Sophisticated Transformation",
       desc: "Transform your vehicle with our Pro Satin Matte film. This premium finish delivers a sophisticated, factory-style satin appearance while providing the same legendary protection as our Gloss Series.",
       features: ["Matte finish transformation", "Self-healing capability", "10-year warranty", "Satin texture retention"],
-      image: "https://images.pexels.com/photos/3729464/pexels-photo-3729464.jpeg?auto=compress&cs=tinysrgb&w=800"
+      image: IMAGES.satin
     },
     {
-      id: "colored",
-      title: "Colored Series",
+      id: "coloured",
+      title: "Coloured Series",
       subtitle: "Express Your Style",
-      desc: "With over 200 premium colors available, our Colored Series lets you completely transform your vehicle while maintaining full PPF protection. From classic metallics to bold custom shades.",
-      features: ["200+ color options", "Full PPF protection", "Color-stable formula", "10-year warranty"],
-      image: "https://images.pexels.com/photos/3764984/pexels-photo-3764984.jpeg?auto=compress&cs=tinysrgb&w=800"
+      desc: "With over 200 premium colours available, our Coloured Series lets you completely transform your vehicle while maintaining full PPF protection. From classic metallics to bold custom shades.",
+      features: ["200+ colour options", "Full PPF protection", "Colour-stable formula", "10-year warranty"],
+      image: IMAGES.coloured
     }
   ];
 
@@ -384,7 +414,7 @@ const Products = () => {
     <div className="min-h-screen bg-black pt-24" data-testid="products-page">
       <div className="max-w-7xl mx-auto px-6 py-12">
         <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">OUR PRODUCTS</p>
-        <h1 className="text-5xl md:text-6xl font-light text-white mb-6">Protection Solutions</h1>
+        <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">Protection Solutions</h1>
         <p className="text-white/60 text-lg max-w-2xl mb-16">
           Every Vetrox product is engineered with premium materials and backed by our comprehensive 10-year warranty.
         </p>
@@ -413,7 +443,7 @@ const Products = () => {
                 </div>
                 <Link
                   to="/contact"
-                  className="inline-block px-8 py-3 border border-emerald-400 text-emerald-400 text-sm tracking-wider hover:bg-emerald-400 hover:text-black transition-all"
+                  className="inline-block px-8 py-3 border border-emerald-400 text-emerald-400 text-sm tracking-wider hover:bg-emerald-400 hover:text-black transition-all font-medium"
                 >
                   Get a Quote
                 </Link>
@@ -426,69 +456,230 @@ const Products = () => {
   );
 };
 
-// Colors Page
-const Colors = () => {
-  const colorCategories = [
+// Colours Page with TOP-TPU Color Chart
+const Colours = () => {
+  const colourCategories = [
     {
-      name: "Classic",
-      colors: ["#1a1a1a", "#2d2d2d", "#404040", "#666666", "#808080", "#ffffff"]
+      name: "Whites & Pearls",
+      colours: [
+        { name: "TPU Pearl White", code: "TPU-HZ-1" },
+        { name: "TPU Crystal White", code: "TPU-HZ-2" },
+        { name: "TPU High Elegant White", code: "TPU-HZ-3" },
+        { name: "TPU Pearlescent White", code: "TPU-HZ-4" },
+        { name: "TPU Bright Moon White", code: "TPU-HZ-10" },
+        { name: "TPU Razer White", code: "TPU-HZ-11" },
+        { name: "TPU Pepper White", code: "TPU-HZ-12" },
+      ]
     },
     {
-      name: "Metallic",
-      colors: ["#4a4a4a", "#5c5c5c", "#787878", "#8b8b8b", "#b8b8b8", "#d4d4d4"]
+      name: "Diamond Series",
+      colours: [
+        { name: "TPU Red Diamond", code: "TPU-HZ-5" },
+        { name: "TPU Green Diamond", code: "TPU-HZ-6" },
+        { name: "TPU Purple Diamond", code: "TPU-HZ-7" },
+        { name: "TPU Diamond White Pink", code: "TPU-HZ-8" },
+        { name: "TPU Diamond White Blue", code: "TPU-HZ-9" },
+        { name: "TPU Diamond Aurora Green", code: "TPU-HZ-85" },
+        { name: "TPU Diamond Blue", code: "TPU-HZ-101" },
+      ]
     },
     {
-      name: "Earth Tones",
-      colors: ["#8b4513", "#a0522d", "#cd853f", "#d2691e", "#deb887", "#f5deb3"]
+      name: "Yellows & Oranges",
+      colours: [
+        { name: "TPU Sahara Yellow", code: "TPU-HZ-13" },
+        { name: "TPU Cuban Sand", code: "TPU-HZ-14" },
+        { name: "TPU Desert Yellow", code: "TPU-HZ-15" },
+        { name: "TPU Milan Gold", code: "TPU-HZ-16" },
+        { name: "TPU Sunflower Yellow", code: "TPU-HZ-18" },
+        { name: "TPU McLaren Orange", code: "TPU-HZ-19" },
+        { name: "TPU Racing Orange", code: "TPU-HZ-20" },
+        { name: "TPU Lava Orange", code: "TPU-HZ-21" },
+        { name: "TPU Coral Orange", code: "TPU-HZ-23" },
+      ]
     },
     {
-      name: "Blues",
-      colors: ["#0a1929", "#1e3a5f", "#2c5282", "#3182ce", "#4299e1", "#90cdf4"]
+      name: "Pinks & Purples",
+      colours: [
+        { name: "TPU Laser Rouge Pink", code: "TPU-HZ-24" },
+        { name: "TPU Shell Pink", code: "TPU-HZ-25" },
+        { name: "TPU Fancy Rouge Pink", code: "TPU-HZ-26" },
+        { name: "TPU Sky Mirror Pink", code: "TPU-HZ-29" },
+        { name: "TPU Rouge Pearl Pink", code: "TPU-HZ-30" },
+        { name: "TPU Iced Berry Pink", code: "TPU-HZ-31" },
+        { name: "TPU Provence Purple", code: "TPU-HZ-34" },
+        { name: "TPU Beetroot Purple", code: "TPU-HZ-35" },
+        { name: "TPU Victoria Secret Purple", code: "TPU-HZ-53" },
+      ]
     },
     {
       name: "Reds",
-      colors: ["#4a0000", "#7b0000", "#a30000", "#c53030", "#e53e3e", "#fc8181"]
+      colours: [
+        { name: "TPU Starlight Ruby Red", code: "TPU-HZ-36" },
+        { name: "TPU Glazed Tata Red", code: "TPU-HZ-37" },
+        { name: "TPU Strawberry Red", code: "TPU-HZ-38" },
+        { name: "TPU Ferrari Red", code: "TPU-HZ-39" },
+        { name: "TPU Crimson", code: "TPU-HZ-40" },
+        { name: "TPU Dracaena Red", code: "TPU-HZ-41" },
+        { name: "TPU Renovating Ferrari Red", code: "TPU-HZ-200" },
+      ]
     },
     {
       name: "Greens",
-      colors: ["#1a3c1a", "#2d4a2d", "#38a169", "#48bb78", "#68d391", "#9ae6b4"]
-    }
+      colours: [
+        { name: "TPU Turquoise Green", code: "TPU-HZ-55" },
+        { name: "TPU Combat Green", code: "TPU-HZ-56" },
+        { name: "TPU Khaki Green", code: "TPU-HZ-57" },
+        { name: "TPU Armoured Green", code: "TPU-HZ-58" },
+        { name: "TPU Mint Green", code: "TPU-HZ-65" },
+        { name: "TPU Tiffany", code: "TPU-HZ-66" },
+        { name: "TPU Alpine Green", code: "TPU-HZ-72" },
+        { name: "TPU British Green", code: "TPU-HZ-80" },
+        { name: "TPU Racing Green", code: "TPU-HZ-216" },
+      ]
+    },
+    {
+      name: "Blues",
+      colours: [
+        { name: "TPU Glacier Blue", code: "TPU-HZ-86" },
+        { name: "TPU Sea Wind Blue", code: "TPU-HZ-88" },
+        { name: "TPU Shark Blue", code: "TPU-HZ-90" },
+        { name: "TPU Miami Blue", code: "TPU-HZ-92" },
+        { name: "TPU Porcelain Blue", code: "TPU-HZ-94" },
+        { name: "TPU Sepang Blue", code: "TPU-HZ-95" },
+        { name: "TPU Gentian Blue", code: "TPU-HZ-96" },
+        { name: "TPU Byron Bay Blue", code: "TPU-HZ-104" },
+        { name: "TPU Neptune Blue", code: "TPU-HZ-236" },
+      ]
+    },
+    {
+      name: "Silvers & Golds",
+      colours: [
+        { name: "TPU Metal Silver", code: "TPU-HZ-108" },
+        { name: "TPU GT Silver", code: "TPU-HZ-109" },
+        { name: "TPU Akha Gold", code: "TPU-HZ-110" },
+        { name: "TPU Champagne Gold", code: "TPU-HZ-111" },
+        { name: "TPU Aquila Metal", code: "TPU-HZ-112" },
+        { name: "TPU Liquid Aluminium Mercury", code: "TPU-HZ-113" },
+        { name: "TPU Liquid Metallic Silver", code: "TPU-HZ-114" },
+      ]
+    },
+    {
+      name: "Greys",
+      colours: [
+        { name: "TPU Agate Grey", code: "TPU-HZ-115" },
+        { name: "TPU Silver Fox Grey", code: "TPU-HZ-116" },
+        { name: "TPU Cement Light Grey", code: "TPU-HZ-117" },
+        { name: "TPU Mystery Grey", code: "TPU-HZ-118" },
+        { name: "TPU Nardo Grey", code: "TPU-HZ-120" },
+        { name: "TPU Brooklyn Grey", code: "TPU-HZ-123" },
+        { name: "TPU Rock Grey", code: "TPU-HZ-124" },
+        { name: "TPU Battleship Grey", code: "TPU-HZ-125" },
+      ]
+    },
+    {
+      name: "Blacks",
+      colours: [
+        { name: "TPU Black Rose", code: "TPU-HZ-135" },
+        { name: "TPU Metallic Black", code: "TPU-HZ-139" },
+        { name: "TPU Coal Grey", code: "TPU-HZ-140" },
+        { name: "TPU Pearl Black", code: "TPU-HZ-142" },
+        { name: "TPU Blue Crystal Black", code: "TPU-HZ-143" },
+        { name: "TPU Santorini Black", code: "TPU-HZ-144" },
+        { name: "TPU Obsidian Black", code: "TPU-HZ-145" },
+        { name: "TPU Super Black", code: "TPU-HZ-146" },
+      ]
+    },
+    {
+      name: "Satin & Matte Finishes",
+      colours: [
+        { name: "TPU Satin Ceramic White", code: "TPU-HZ-151" },
+        { name: "TPU Super Matte White", code: "TPU-HZ-152" },
+        { name: "TPU AMG Mountain Grey", code: "TPU-HZ-155" },
+        { name: "TPU Matte Dark Silver", code: "TPU-HZ-157" },
+        { name: "TPU Satin Racing Blue", code: "TPU-HZ-159" },
+        { name: "TPU Satin Army Green", code: "TPU-HZ-161" },
+        { name: "TPU Matte Romani Red", code: "TPU-HZ-165" },
+        { name: "TPU Super Matte Black", code: "TPU-HZ-177" },
+      ]
+    },
+    {
+      name: "Carbon Fibre",
+      colours: [
+        { name: "TPU Carbon Fibre", code: "TPU-HZ-173" },
+        { name: "TPU Transparent Carbon Fibre", code: "TPU-HZ-289" },
+        { name: "TPU Flower Carbon Silver", code: "TPU-HZ-290" },
+        { name: "TPU Matte Transparent Carbon Fibre", code: "TPU-HZ-292" },
+        { name: "TPU Carbon Fibre Liquid Aluminium", code: "TPU-HZ-293" },
+      ]
+    },
   ];
 
+  // Generate colour swatches with approximate colours
+  const getColourSwatch = (name) => {
+    const colourMap = {
+      'white': '#f5f5f5', 'pearl': '#faf8f5', 'crystal': '#f0f8ff',
+      'red': '#c41e3a', 'ferrari': '#ff2800', 'crimson': '#dc143c', 'ruby': '#e0115f', 'strawberry': '#fc5a8d',
+      'green': '#228b22', 'mint': '#98fb98', 'tiffany': '#0abab5', 'alpine': '#4a5d23', 'british': '#004225', 'racing': '#00563f',
+      'blue': '#4169e1', 'miami': '#00bfff', 'glacier': '#80d8ff', 'shark': '#1e90ff', 'neptune': '#1f75fe',
+      'purple': '#800080', 'violet': '#8b00ff', 'beetroot': '#8e4585',
+      'pink': '#ff69b4', 'rouge': '#c71585', 'berry': '#8e4585',
+      'yellow': '#ffd700', 'sahara': '#f4a460', 'sunflower': '#ffda03',
+      'orange': '#ff8c00', 'coral': '#ff7f50', 'lava': '#ff4500',
+      'gold': '#ffd700', 'champagne': '#f7e7ce', 'milan': '#c5b358',
+      'silver': '#c0c0c0', 'metal': '#aaa9ad',
+      'grey': '#808080', 'gray': '#808080', 'nardo': '#7c7b7a', 'cement': '#857f72',
+      'black': '#1a1a1a', 'obsidian': '#0a0a0a', 'coal': '#2c2c2c',
+      'matte': '#3d3d3d', 'satin': '#4a4a4a',
+      'carbon': '#2b2b2b',
+    };
+    
+    const nameLower = name.toLowerCase();
+    for (const [key, value] of Object.entries(colourMap)) {
+      if (nameLower.includes(key)) return value;
+    }
+    return '#666666';
+  };
+
   return (
-    <div className="min-h-screen bg-black pt-24" data-testid="colors-page">
+    <div className="min-h-screen bg-black pt-24" data-testid="colours-page">
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">COLOR GALLERY</p>
-        <h1 className="text-5xl md:text-6xl font-light text-white mb-6">200+ Premium Finishes</h1>
+        <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">COLOUR GALLERY</p>
+        <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">200+ Premium Finishes</h1>
         <p className="text-white/60 text-lg max-w-2xl mb-16">
-          From classic metallics to bold custom shades, find the perfect color to transform your vehicle.
+          From classic metallics to bold custom shades, find the perfect colour to transform your vehicle. All colours available in our TOP-TPU range.
         </p>
 
-        <div className="space-y-12">
-          {colorCategories.map((category) => (
-            <div key={category.name} data-testid={`color-category-${category.name.toLowerCase()}`}>
-              <h3 className="text-white text-xl mb-6">{category.name}</h3>
-              <div className="flex flex-wrap gap-4">
-                {category.colors.map((color, idx) => (
+        <div className="space-y-16">
+          {colourCategories.map((category) => (
+            <div key={category.name} data-testid={`colour-category-${category.name.toLowerCase().replace(/\s+/g, '-')}`}>
+              <h3 className="text-white text-2xl mb-6 border-b border-white/10 pb-4">{category.name}</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                {category.colours.map((colour, idx) => (
                   <div
                     key={idx}
-                    className="w-20 h-20 rounded-lg border border-white/20 hover:scale-110 transition-transform cursor-pointer"
-                    style={{ backgroundColor: color }}
-                    title={color}
-                  />
+                    className="group p-4 border border-white/10 hover:border-emerald-400/50 transition-all cursor-pointer"
+                  >
+                    <div
+                      className="w-full h-16 rounded mb-3 border border-white/20"
+                      style={{ backgroundColor: getColourSwatch(colour.name) }}
+                    />
+                    <p className="text-white text-sm font-medium truncate">{colour.name.replace('TPU ', '')}</p>
+                    <p className="text-white/40 text-xs">{colour.code}</p>
+                  </div>
                 ))}
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-20 text-center">
-          <p className="text-white/60 mb-6">Don't see your perfect color? We offer custom color matching.</p>
+        <div className="mt-20 text-center p-12 border border-white/10 bg-zinc-900">
+          <h3 className="text-2xl text-white mb-4">Can't Find Your Perfect Colour?</h3>
+          <p className="text-white/60 mb-6">We offer custom colour matching services. Contact us with your requirements.</p>
           <Link
             to="/contact"
-            className="inline-block px-8 py-3 bg-emerald-500 text-white text-sm tracking-wider hover:bg-emerald-600 transition-all"
+            className="inline-block px-8 py-3 bg-emerald-500 text-white text-sm tracking-wider hover:bg-emerald-600 transition-all font-medium"
           >
-            Request Custom Color
+            Request Custom Colour
           </Link>
         </div>
       </div>
@@ -502,7 +693,7 @@ const About = () => {
     <div className="min-h-screen bg-black pt-24" data-testid="about-page">
       <div className="max-w-7xl mx-auto px-6 py-12">
         <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">ABOUT VETROX</p>
-        <h1 className="text-5xl md:text-6xl font-light text-white mb-6">Australian Excellence</h1>
+        <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">Australian Excellence</h1>
         
         <div className="grid md:grid-cols-2 gap-16 mt-16">
           <div>
@@ -519,7 +710,7 @@ const About = () => {
           </div>
           <div>
             <img
-              src="https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&cs=tinysrgb&w=800"
+              src={IMAGES.hero}
               alt="Premium vehicle protection"
               className="w-full h-80 object-cover"
             />
@@ -529,16 +720,30 @@ const About = () => {
         <div className="grid md:grid-cols-3 gap-8 mt-20">
           {[
             { number: "10", label: "Year Warranty", suffix: "+" },
-            { number: "200", label: "Color Options", suffix: "+" },
+            { number: "200", label: "Colour Options", suffix: "+" },
             { number: "100", label: "Satisfied Customers", suffix: "%" }
           ].map((stat, idx) => (
             <div key={idx} className="text-center p-8 border border-white/10">
-              <div className="text-5xl text-emerald-400 font-light mb-2">
+              <div className="text-5xl text-emerald-400 font-bold mb-2">
                 {stat.number}<span className="text-2xl">{stat.suffix}</span>
               </div>
               <div className="text-white/60 text-sm tracking-wider">{stat.label}</div>
             </div>
           ))}
+        </div>
+
+        {/* Reseller CTA */}
+        <div className="mt-20 p-12 bg-emerald-900/20 border border-emerald-500/20 text-center">
+          <h2 className="text-3xl text-white mb-4">We Accept Resellers</h2>
+          <p className="text-white/60 mb-6 max-w-2xl mx-auto">
+            Join our growing network of authorised resellers across Australia. We provide full product training, marketing support, and competitive wholesale pricing.
+          </p>
+          <Link
+            to="/contact"
+            className="inline-block px-8 py-3 bg-emerald-500 text-white text-sm tracking-wider hover:bg-emerald-600 transition-all font-medium"
+          >
+            Become a Reseller
+          </Link>
         </div>
 
         <div className="mt-20">
@@ -550,7 +755,7 @@ const About = () => {
               { title: "Crystal Clear Finish", desc: "Virtually invisible protection that enhances your paint" },
               { title: "UV Protection", desc: "Prevents yellowing and maintains clarity for years" },
               { title: "Hydrophobic Coating", desc: "Water beads off, keeping your car cleaner longer" },
-              { title: "Professional Network", desc: "Authorized installers across Australia" }
+              { title: "Professional Network", desc: "Authorised installers across Australia" }
             ].map((item, idx) => (
               <div key={idx} className="flex gap-4 p-6 border border-white/10">
                 <span className="text-emerald-400 text-xl">✓</span>
@@ -576,7 +781,8 @@ const Contact = () => {
     vehicle_make: "",
     vehicle_model: "",
     service_type: "",
-    message: ""
+    message: "",
+    enquiry_type: "quote"
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -602,7 +808,8 @@ const Contact = () => {
         vehicle_make: "",
         vehicle_model: "",
         service_type: "",
-        message: ""
+        message: "",
+        enquiry_type: "quote"
       });
     } catch (error) {
       console.error("Error submitting enquiry:", error);
@@ -617,8 +824,9 @@ const Contact = () => {
     "Partial PPF (Front End)",
     "Gloss Series",
     "Pro Satin Matte",
-    "Colored PPF",
-    "Custom Color Match",
+    "Coloured PPF",
+    "Custom Colour Match",
+    "Reseller Enquiry",
     "Other / Not Sure"
   ];
 
@@ -629,7 +837,7 @@ const Contact = () => {
           {/* Contact Info */}
           <div>
             <p className="text-emerald-400 text-sm tracking-[0.3em] mb-4">CONTACT US</p>
-            <h1 className="text-5xl md:text-6xl font-light text-white mb-6">Get in Touch</h1>
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">Get in Touch</h1>
             <p className="text-white/60 text-lg mb-12">
               Ready to protect your investment? Fill out the form and our team will get back to you within 24 hours.
             </p>
@@ -637,7 +845,7 @@ const Contact = () => {
             <div className="space-y-8">
               <div>
                 <h3 className="text-white font-medium mb-2">Email</h3>
-                <a href="mailto:admin@vetrox.com.au" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                <a href="mailto:admin@vetrox.com.au" className="text-emerald-400 hover:text-emerald-300 transition-colours">
                   admin@vetrox.com.au
                 </a>
               </div>
@@ -648,13 +856,21 @@ const Contact = () => {
               <div>
                 <h3 className="text-white font-medium mb-4">Authorised Partners</h3>
                 <div className="space-y-2">
-                  <a href="https://northshoreppf.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/60 hover:text-white transition-colors">
+                  <a href="https://northshoreppf.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/60 hover:text-white transition-colours">
                     NorthShore PPF →
                   </a>
-                  <a href="https://diyppfkit.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/60 hover:text-white transition-colors">
+                  <a href="https://diyppfkit.com.au/" target="_blank" rel="noopener noreferrer" className="block text-white/60 hover:text-white transition-colours">
                     DIYPPFKIT.com.au →
                   </a>
                 </div>
+              </div>
+              
+              {/* Reseller Notice */}
+              <div className="p-6 bg-emerald-900/20 border border-emerald-500/30">
+                <h3 className="text-emerald-400 font-medium mb-2">Become a Reseller</h3>
+                <p className="text-white/60 text-sm">
+                  We accept resellers across Australia. Select "Reseller Enquiry" in the form to learn about partnership opportunities.
+                </p>
               </div>
             </div>
           </div>
@@ -670,16 +886,49 @@ const Contact = () => {
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
-                  className="px-8 py-3 border border-white text-white text-sm tracking-wider hover:bg-white hover:text-black transition-all"
+                  className="px-8 py-3 border border-white text-white text-sm tracking-wider hover:bg-white hover:text-black transition-all font-medium"
                 >
                   Submit Another Enquiry
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} data-testid="enquiry-form">
-                <h2 className="text-2xl text-white mb-8">Request a Quote</h2>
+                <h2 className="text-2xl text-white mb-2">Request a Quote</h2>
+                <div className="warranty-badge mb-8">
+                  <span className="text-emerald-400">●</span>
+                  10 Year Warranty
+                </div>
                 
                 <div className="space-y-6">
+                  {/* Enquiry Type */}
+                  <div>
+                    <label className="block text-white/70 text-sm mb-2">Enquiry Type</label>
+                    <div className="flex gap-4">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="enquiry_type"
+                          value="quote"
+                          checked={formData.enquiry_type === "quote"}
+                          onChange={handleChange}
+                          className="text-emerald-400"
+                        />
+                        <span className="text-white/70 text-sm">Get a Quote</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="enquiry_type"
+                          value="reseller"
+                          checked={formData.enquiry_type === "reseller"}
+                          onChange={handleChange}
+                          className="text-emerald-400"
+                        />
+                        <span className="text-white/70 text-sm">Reseller Enquiry</span>
+                      </label>
+                    </div>
+                  </div>
+
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-white/70 text-sm mb-2">Name *</label>
@@ -690,7 +939,7 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                         data-testid="input-name"
-                        className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colors"
+                        className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colours"
                         placeholder="Your name"
                       />
                     </div>
@@ -703,7 +952,7 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                         data-testid="input-email"
-                        className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colors"
+                        className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colours"
                         placeholder="your@email.com"
                       />
                     </div>
@@ -718,7 +967,7 @@ const Contact = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         data-testid="input-phone"
-                        className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colors"
+                        className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colours"
                         placeholder="+61 XXX XXX XXX"
                       />
                     </div>
@@ -729,7 +978,7 @@ const Contact = () => {
                         value={formData.service_type}
                         onChange={handleChange}
                         data-testid="input-service-type"
-                        className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colors"
+                        className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colours"
                       >
                         <option value="">Select a service</option>
                         {serviceTypes.map((type) => (
@@ -748,7 +997,7 @@ const Contact = () => {
                         value={formData.vehicle_make}
                         onChange={handleChange}
                         data-testid="input-vehicle-make"
-                        className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colors"
+                        className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colours"
                         placeholder="e.g., BMW, Mercedes, Tesla"
                       />
                     </div>
@@ -760,7 +1009,7 @@ const Contact = () => {
                         value={formData.vehicle_model}
                         onChange={handleChange}
                         data-testid="input-vehicle-model"
-                        className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colors"
+                        className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colours"
                         placeholder="e.g., M3, C63, Model S"
                       />
                     </div>
@@ -775,7 +1024,7 @@ const Contact = () => {
                       required
                       rows={5}
                       data-testid="input-message"
-                      className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colors resize-none"
+                      className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:border-emerald-400 focus:outline-none transition-colours resize-none"
                       placeholder="Tell us about your project..."
                     />
                   </div>
@@ -784,7 +1033,7 @@ const Contact = () => {
                     type="submit"
                     disabled={isSubmitting}
                     data-testid="submit-enquiry-btn"
-                    className="w-full px-8 py-4 bg-emerald-500 text-white text-sm tracking-wider hover:bg-emerald-600 disabled:bg-emerald-500/50 disabled:cursor-not-allowed transition-all"
+                    className="w-full px-8 py-4 bg-emerald-500 text-white text-sm tracking-wider hover:bg-emerald-600 disabled:bg-emerald-500/50 disabled:cursor-not-allowed transition-all font-medium"
                   >
                     {isSubmitting ? "Submitting..." : "Submit Enquiry"}
                   </button>
@@ -808,7 +1057,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<Products />} />
-          <Route path="/colors" element={<Colors />} />
+          <Route path="/colours" element={<Colours />} />
+          <Route path="/colors" element={<Colours />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
