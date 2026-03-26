@@ -884,9 +884,15 @@ const Contact = () => {
 
             <div className="space-y-8">
               <div>
+                <h3 className="text-white font-medium mb-2">Phone</h3>
+                <a href="tel:0411911858" className="text-emerald-400 hover:text-emerald-300 transition-colours">
+                  0411 911 858
+                </a>
+              </div>
+              <div>
                 <h3 className="text-white font-medium mb-2">Email</h3>
-                <a href="mailto:admin@vetrox.com" className="text-emerald-400 hover:text-emerald-300 transition-colours">
-                  admin@vetrox.com
+                <a href="mailto:admin@vetrox.com.au" className="text-emerald-400 hover:text-emerald-300 transition-colours">
+                  admin@vetrox.com.au
                 </a>
               </div>
               <div>
